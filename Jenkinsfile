@@ -42,23 +42,6 @@ pipeline {
                        sh 'ansible-lint deploy.yml'
                    }
                }
-               stage("Verify ansible playbook syntax addssh.yaml") {
-                   steps {
-                       sh 'ansible-lint addssh.yaml'
-                   }
-               }
-               stage("Add ssh_knows_hosts") {
-                    when {
-                       expression { GIT_BRANCH == 'origin/master' }
-                    }
-                   steps {
-                       sh '''
-                       apt-get update
-                       apt-get install -y sshpass
-		       ansible-playbook addssh.yaml
-                       '''
-                   }
-	       }
                stage("Deploy app in production") {
                     when {
                        expression { GIT_BRANCH == 'origin/master' }
@@ -67,9 +50,9 @@ pipeline {
                        sh '''
                        apt-get update
                        apt-get install -y sshpass
-		       export ANSIBLE_HOST_KEY_CHECKING=False
-		       ansible-playbook addssh.yaml
-                       ansible-playbook  -i hosts.yml  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=$sudopass" deploy.yml
+                       ansible-playbook  -i hosts.yml  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=$sudopass" \
+		       --extra-vars ansible_ssh_common_args='"-o StrictHostKeyChecking=no -o ServerAliveInterval=30"' \
+		       deploy.yml
                        '''
                    }
                } 
