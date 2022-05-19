@@ -51,7 +51,7 @@ pipeline {
                        apt-get update
                        apt-get install -y sshpass
 		       export ANSIBLE_HOST_KEY_CHECKING=False
-                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=$sudopass" deploy.yml
+                       ansible-playbook  -i hosts.yml  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=$sudopass" deploy.yml
                        '''
                    }
                } 
