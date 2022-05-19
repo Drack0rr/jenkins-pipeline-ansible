@@ -50,9 +50,7 @@ pipeline {
                        sh '''
                        apt-get update
                        apt-get install -y sshpass
-		       echo $USER
-		       echo $sudopass
-                       ansible-playbook  -i hosts.yml  --extra-vars ansible_user='$USER' --extra-vars ansible_password='$SUDOPASS' \
+                       ansible-playbook  -i hosts.yml  --extra-vars a"nsible_user="'$USER' --extra-vars "ansible_password="'$SUDOPASS' \
 		       --extra-vars ansible_ssh_common_args='"-o StrictHostKeyChecking=no -o ServerAliveInterval=30"' \
 		       deploy.yml
                        '''
