@@ -57,6 +57,7 @@ pipeline {
 		       ansible-playbook addssh.yaml
                        '''
                    }
+	       }
                stage("Deploy app in production") {
                     when {
                        expression { GIT_BRANCH == 'origin/master' }
