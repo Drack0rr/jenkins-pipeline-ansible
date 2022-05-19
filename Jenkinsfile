@@ -54,6 +54,7 @@ pipeline {
                    steps {
                        sh '''
                        apt-get update
+                       apt-get install -y sshpass
 		       ansible-playbook addssh.yaml
                        '''
                    }
