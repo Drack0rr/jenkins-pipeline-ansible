@@ -37,11 +37,26 @@ pipeline {
             }
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest' } }
             stages {
-               stage("Verify ansible playbook syntax") {
+               stage("Verify ansible playbook syntax deploy") {
                    steps {
                        sh 'ansible-lint deploy.yml'
                    }
                }
+               stage("Verify ansible playbook syntax addssh.yaml") {
+                   steps {
+                       sh 'ansible-lint addssh.yaml'
+                   }
+               }
+               stage("Add ssh_knows_hosts") {
+                    when {
+                       expression { GIT_BRANCH == 'origin/master' }
+                    }
+                   steps {
+                       sh '''
+                       apt-get update
+		       ansible-playbook addssh.yaml
+                       '''
+                   }
                stage("Deploy app in production") {
                     when {
                        expression { GIT_BRANCH == 'origin/master' }
