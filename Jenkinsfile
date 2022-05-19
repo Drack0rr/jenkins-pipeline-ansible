@@ -29,6 +29,7 @@ pipeline {
         stage('Test and deploy the application') {
             environment {
                 SUDOPASS = credentials('sudopass')
+		USER = credentials('user-ansible')
             }
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest' } }
             stages {
@@ -45,7 +46,7 @@ pipeline {
                        sh '''
                        apt-get update
                        apt-get install -y sshpass
-                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml
+                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" --extra-vars ansible_user=$USER deploy.yml
                        '''
                    }
                } 
