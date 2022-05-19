@@ -50,7 +50,7 @@ pipeline {
                        sh '''
                        apt-get update
                        apt-get install -y sshpass
-                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=sudopass" deploy.yml
+                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_user=$USER" --extra-vars "ansible_password=$sudopass" deploy.yml
                        '''
                    }
                } 
