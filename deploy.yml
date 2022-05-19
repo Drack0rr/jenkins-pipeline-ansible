@@ -1,7 +1,7 @@
 ---
 - name: "Apache installation using docker"
   hosts: prod
-  gather_facts: True
+  gather_facts: true
   become: true
   #vars_files:
   #  - files/secrets/credentials.yml
