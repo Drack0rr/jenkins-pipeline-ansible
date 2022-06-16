@@ -45,5 +45,10 @@ pipeline {
                } 
             }
           }
+	  stage('Exemple de notification Discord'){
+		  environment {
+			  URLDISCORD = credentials('discord-jenkins')
+       		discordSend description: "Un exemple de notification:", footer: "Test: https://ihul.com.br", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "$URLDISCORD"
+		}
       }
 }
