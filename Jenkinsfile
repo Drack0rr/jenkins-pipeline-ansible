@@ -9,7 +9,7 @@ pipeline {
             }
         }
         stage('Check markdown syntax') {
-            agent { docker { image 'alpine:latest' } }
+            agent { docker { image 'ruby:alpine' } }
             steps {
                 sh 'apk --no-cache add git'
                 sh 'gem install mdl'
