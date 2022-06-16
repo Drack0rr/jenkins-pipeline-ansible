@@ -16,16 +16,7 @@ pipeline {
                 sh 'mdl --version'
                 sh 'mdl --style all --warnings --git-recurse \${WORKSPACE}'
             }
-        }
-        stage('Prepare ansible environment') {
-            agent any
-            environment {
-                VAULTKEY = credentials('vaultkey')
-            }
-            steps {
-                sh 'echo \$VAULTKEY > vault.key'
-            }
-        }
+	}
         stage('Test and deploy the application') {
             environment {
                 SUDOPASS = credentials('sudopass')
