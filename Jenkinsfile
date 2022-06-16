@@ -48,8 +48,8 @@ pipeline {
                     }
                    steps {
                        sh '''
-                       apt-get update
-                       apt-get install -y sshpass
+                       dnf update -y
+                       dnf install -y sshpass
                        ansible-playbook  -i hosts.yml  --extra-vars "ansible_user="$USER --extra-vars "ansible_password="$SUDOPASS \
 		       --extra-vars ansible_ssh_common_args='"-o StrictHostKeyChecking=no -o ServerAliveInterval=30"' \
 		       deploy.yml
